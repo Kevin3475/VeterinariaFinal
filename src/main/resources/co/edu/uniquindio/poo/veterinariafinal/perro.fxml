@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.poo.veterinariafinal.viewController.PerroViewController">
+
+    <top>
+        <Label text="🐶 Gestión de Perros"
+               style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-padding: 15;"/>
+    </top>
+
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNombre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Raza:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtRaza" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Edad:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtEdad" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Peso (kg):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtPeso" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="ID:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtId" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <Label text="Dueño:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtDueno" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                <Label text="Tamaño:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="comboTamano" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                <Label text="Nivel Adiestramiento:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtAdiestramiento" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                <Label text="Necesidad de Paseo:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtPaseo" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <HBox spacing="15" alignment="CENTER">
+                <Button text="Guardar" onAction="#guardarPerro" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+                <Button text="Cancelar" onAction="#cancelar" style="-fx-background-color: #f44336; -fx-text-fill: white;"/>
+            </HBox>
+
+            <Label fx:id="lblMensaje" text="" style="-fx-font-size: 14px;"/>
+
+            <TableView fx:id="tablaPerros" prefHeight="250" prefWidth="700">
+                <columns>
+                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="100"/>
+                    <TableColumn fx:id="colRaza" text="Raza" prefWidth="100"/>
+                    <TableColumn fx:id="colEdad" text="Edad" prefWidth="70"/>
+                    <TableColumn fx:id="colPeso" text="Peso (kg)" prefWidth="90"/>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="100"/>
+                    <TableColumn fx:id="colDueno" text="Dueño" prefWidth="100"/>
+                    <TableColumn fx:id="colTamano" text="Tamaño" prefWidth="90"/>
+                    <TableColumn fx:id="colAdiestramiento" text="Adiestramiento" prefWidth="130"/>
+                    <TableColumn fx:id="colPaseo" text="Paseo" prefWidth="100"/>
+                </columns>
+            </TableView>
+
+        </VBox>
+    </center>
+
+</BorderPane>

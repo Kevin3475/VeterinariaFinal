@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="co.edu.uniquindio.poo.veterinariafinal.viewController.GatoViewController">
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Registro de Gatos" style="-fx-font-size:18; -fx-font-weight:bold;"/>
+
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNombre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Raza:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtRaza" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Edad:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtEdad" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Peso (kg):" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtPesoKg" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="ID:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtId" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <Label text="Dueño:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="comboDueno" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                <Label text="Tipo de gato:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="comboTipoGato" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                <Label text="Horas de sueño:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtHorasSueno" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                <Label text="Nivel de independencia:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNivelIndependencia" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Registrar" onAction="#registrarGato"/>
+                <Button text="Actualizar" onAction="#actualizarGato"/>
+                <Button text="Eliminar" onAction="#eliminarGato"/>
+                <Button text="Limpiar" onAction="#limpiarCampos"/>
+            </HBox>
+
+            <TableView fx:id="tablaGatos" prefHeight="250">
+                <columns>
+                    <TableColumn fx:id="colNombre" text="Nombre"/>
+                    <TableColumn fx:id="colRaza" text="Raza"/>
+                    <TableColumn fx:id="colEdad" text="Edad"/>
+                    <TableColumn fx:id="colPeso" text="Peso (kg)"/>
+                    <TableColumn fx:id="colId" text="ID"/>
+                    <TableColumn fx:id="colDueno" text="Dueño"/>
+                    <TableColumn fx:id="colTipoGato" text="Tipo"/>
+                    <TableColumn fx:id="colHorasSueno" text="Horas sueño"/>
+                    <TableColumn fx:id="colNivelIndependencia" text="Independencia"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

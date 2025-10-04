@@ -6,7 +6,7 @@ public class Ave extends Mascota{
     private int sonidosImitados;
     private Vuela vuela;
 
-    public Ave(String nombre,String raza,int edad,double pesoKg,String id,Dueno dueno,String tipoPlumaje,int sonidoImitados,Vuela vuela){
+    public Ave(String nombre,String raza,int edad,double pesoKg,String id,Dueno dueno,String tipoPlumaje,int sonidosImitados,Vuela vuela){
         super(nombre,raza,edad,pesoKg,id,dueno);
 
         this.tipoPlumaje = tipoPlumaje;
@@ -36,5 +36,14 @@ public class Ave extends Mascota{
 
     public void setVuela(Vuela vuela) {
         this.vuela = vuela;
+    }
+
+    @Override
+    public String toString() {
+        return "Ave{" +
+                "tipoPlumaje='" + tipoPlumaje + '\'' +
+                ", sonidosImitados=" + sonidosImitados +
+                ", vuela=" + vuela +
+                '}';
     }
 }

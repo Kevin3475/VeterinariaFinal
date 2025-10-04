@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.poo.veterinariafinal.viewController.ReptilViewController">
+
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+
+            <Label text="Gestión de Reptiles">
+                <font>
+                    <Font size="20"/>
+                </font>
+            </Label>
+
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT" minWidth="120"/>
+                    <ColumnConstraints halignment="LEFT" hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtId" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNombre" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Raza:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtRaza" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Edad:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtEdad" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Peso (Kg):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtPeso" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <Label text="Temperatura Óptima:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtTemperatura" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                <Label text="Hábitat:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="comboHabitat" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                <Label text="Nivel de Peligro:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="comboPeligro" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                <Label text="Dueño:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="comboDueno" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <HBox spacing="15" alignment="CENTER">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <Button fx:id="btnAgregar" text="Agregar" onAction="#agregarReptil"/>
+                <Button fx:id="btnActualizar" text="Actualizar" onAction="#actualizarReptil"/>
+                <Button fx:id="btnEliminar" text="Eliminar" onAction="#eliminarReptil"/>
+                <Button fx:id="btnLimpiar" text="Limpiar" onAction="#limpiarCampos"/>
+            </HBox>
+
+            <TableView fx:id="tablaReptiles" prefHeight="250">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="120"/>
+                    <TableColumn fx:id="colRaza" text="Raza" prefWidth="120"/>
+                    <TableColumn fx:id="colEdad" text="Edad" prefWidth="60"/>
+                    <TableColumn fx:id="colPeso" text="Peso (Kg)" prefWidth="80"/>
+                    <TableColumn fx:id="colTemperatura" text="Temp. Óptima" prefWidth="100"/>
+                    <TableColumn fx:id="colHabitat" text="Hábitat" prefWidth="100"/>
+                    <TableColumn fx:id="colPeligro" text="Nivel Peligro" prefWidth="100"/>
+                    <TableColumn fx:id="colDueno" text="Dueño" prefWidth="120"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+</BorderPane>

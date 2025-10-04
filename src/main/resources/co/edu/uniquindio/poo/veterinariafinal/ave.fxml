@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.uniquindio.poo.veterinariafinal.viewController.AveViewController"
+            prefWidth="950" prefHeight="500">
+
+    <VBox spacing="10" layoutX="20" layoutY="20">
+
+        <Label text="Gestión de Aves" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+        <HBox spacing="20">
+            <!-- Formulario -->
+            <VBox spacing="8">
+                <Label text="Nombre:"/>
+                <TextField fx:id="txtNombre"/>
+
+                <Label text="Raza:"/>
+                <TextField fx:id="txtRaza"/>
+
+                <Label text="Edad:"/>
+                <TextField fx:id="txtEdad"/>
+
+                <Label text="Peso (kg):"/>
+                <TextField fx:id="txtPeso"/>
+
+                <Label text="ID:"/>
+                <TextField fx:id="txtId"/>
+
+                <Label text="Dueño:"/>
+                <TextField fx:id="txtDuenoNombre"/>
+
+                <Label text="Tipo de Plumaje:"/>
+                <TextField fx:id="txtTipoPlumaje"/>
+
+                <Label text="Sonidos Imitados:"/>
+                <TextField fx:id="txtSonidosImitados"/>
+
+                <Label text="¿Vuela?:"/>
+                <ComboBox fx:id="comboVuela"/>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="Agregar" onAction="#agregarAve"/>
+                    <Button text="Eliminar" onAction="#eliminarAve"/>
+                </HBox>
+            </VBox>
+
+            <!-- Tabla -->
+            <TableView fx:id="tablaAves" prefWidth="600" prefHeight="400">
+                <columns>
+                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="90"/>
+                    <TableColumn fx:id="colRaza" text="Raza" prefWidth="90"/>
+                    <TableColumn fx:id="colEdad" text="Edad" prefWidth="60"/>
+                    <TableColumn fx:id="colPeso" text="Peso" prefWidth="70"/>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+                    <TableColumn fx:id="colTipoPlumaje" text="Plumaje" prefWidth="100"/>
+                    <TableColumn fx:id="colSonidosImitados" text="Sonidos" prefWidth="90"/>
+                    <TableColumn fx:id="colVuela" text="Vuela" prefWidth="70"/>
+                </columns>
+            </TableView>
+        </HBox>
+    </VBox>
+</AnchorPane>

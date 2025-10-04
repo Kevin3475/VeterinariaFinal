@@ -6,18 +6,20 @@ import java.util.List;
 public class Dueno {
 
     private String nombre;
+    private String id;
     private String numero;
     private String direccion;
     private String puntajeFidelidad;
     private List<Mascota> listMascotas;
 
-    public Dueno(String nombre,String numero,String direccion,String puntajeFidelidad){
+    public Dueno(String id,String nombre,String numero,String direccion,String puntajeFidelidad){
 
         this.nombre = nombre;
         this.numero = numero;
         this.direccion = direccion;
         this.puntajeFidelidad = puntajeFidelidad;
         this.listMascotas = new ArrayList<>();
+        this.id = id;
 
     }
 
@@ -35,6 +37,14 @@ public class Dueno {
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDireccion() {
