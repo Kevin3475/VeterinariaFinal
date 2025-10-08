@@ -1,3 +1,4 @@
+// MenuController.java
 package co.edu.uniquindio.poo.veterinariafinal.controller;
 
 import javafx.fxml.FXMLLoader;

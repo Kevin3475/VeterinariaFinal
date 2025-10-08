@@ -8,15 +8,33 @@
 <VBox xmlns="http://javafx.com/javafx/8.0.171"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="co.edu.uniquindio.poo.veterinariafinal.viewController.MenuViewController"
-      alignment="CENTER" spacing="15" style="-fx-background-color: #f8f9fa; -fx-padding: 40;">
+      alignment="CENTER" spacing="20" style="-fx-background-color: #f0f8ff; -fx-padding: 40;">
 
-    <Text text="🐾 Sistema Veterinaria Final" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+    <Text text="🐾 Sistema Veterinaria Patitas"
+          style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #2c3e50;"/>
 
-    <!-- Los onAction deben llamar a métodos del MenuViewController -->
-    <Button text="Gestión de Dueños" onAction="#abrirVentanaDueno" prefWidth="220"/>
-    <Button text="Gestión de Perros" onAction="#abrirVentanaPerro" prefWidth="220"/>
-    <Button text="Gestión de Gatos" onAction="#abrirVentanaGato" prefWidth="220"/>
-    <Button text="Gestión de Aves" onAction="#abrirVentanaAve" prefWidth="220"/>
-    <Button text="Gestión de Reptiles" onAction="#abrirVentanaReptil" prefWidth="220"/>
+    <Text text="Gestión Integral de Mascotas y Dueños"
+          style="-fx-font-size: 16px; -fx-fill: #7f8c8d; -fx-padding: 0 0 20 0;"/>
+
+    <!-- Botones de navegación principales -->
+    <Button text="👥 Gestión de Dueños" onAction="#abrirVentanaDueno"
+            prefWidth="250" prefHeight="40"
+            style="-fx-font-size: 14px; -fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+    <Button text="🐕 Gestión de Perros" onAction="#abrirVentanaPerro"
+            prefWidth="250" prefHeight="40"
+            style="-fx-font-size: 14px; -fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+    <Button text="🐱 Gestión de Gatos" onAction="#abrirVentanaGato"
+            prefWidth="250" prefHeight="40"
+            style="-fx-font-size: 14px; -fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+    <Button text="🦜 Gestión de Aves" onAction="#abrirVentanaAve"
+            prefWidth="250" prefHeight="40"
+            style="-fx-font-size: 14px; -fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+    <Button text="🐍 Gestión de Reptiles" onAction="#abrirVentanaReptil"
+            prefWidth="250" prefHeight="40"
+            style="-fx-font-size: 14px; -fx-background-color: #8e44ad; -fx-text-fill: white; -fx-font-weight: bold;"/>
 
 </VBox>

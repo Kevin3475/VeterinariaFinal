@@ -1,8 +1,8 @@
+// App.java CORREGIDO
 package co.edu.uniquindio.poo.veterinariafinal;
 
 import co.edu.uniquindio.poo.veterinariafinal.model.Veterinaria;
-import co.edu.uniquindio.poo.veterinariafinal.viewController.DuenoViewController;
-import co.edu.uniquindio.poo.veterinariafinal.viewController.ReptilViewController;
+import co.edu.uniquindio.poo.veterinariafinal.viewController.MenuViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,37 +11,32 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
+    private Veterinaria veterinaria;
+
     @Override
-    public void start(Stage primaryStage) {
-        try {
-            // Crear la veterinaria compartida
-            Veterinaria veterinaria = new Veterinaria("Patitas", "1203");
+    public void start(Stage primaryStage) throws Exception {
+        // Inicializar la veterinaria
+        veterinaria = new Veterinaria("Veterinaria Patitas", "123456789");
 
-            // Cargar la vista del menú principal
-            FXMLLoader loaderMenu = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/veterinariafinal/menu.fxml"));
-            Parent rootMenu = loaderMenu.load();
+        // 🔧 CORREGIR: Cargar el menú principal con la ruta correcta
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/veterinariafinal/menu.fxml"));
 
-            // Cargar DuenoView
-            FXMLLoader loaderDueno = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/veterinariafinal/Dueno.fxml"));
-            Parent rootDueno = loaderDueno.load();
-            DuenoViewController duenoController = loaderDueno.getController();
-            duenoController.setVeterinaria(veterinaria);
+        // 🔧 ALTERNATIVA 1: Si la anterior no funciona
+        // FXMLLoader loader = new FXMLLoader(getClass().getResource("MenuView.fxml"));
 
-            // Cargar ReptilView
-            FXMLLoader loaderReptil = new FXMLLoader(getClass().getResource("/co/edu/uniquindio/poo/veterinariafinal/Reptil.fxml"));
-            Parent rootReptil = loaderReptil.load();
-            ReptilViewController reptilController = loaderReptil.getController();
-            reptilController.setVeterinaria(veterinaria);
+        // 🔧 ALTERNATIVA 2: Ruta absoluta desde resources
+        // FXMLLoader loader = new FXMLLoader(App.class.getResource("/MenuView.fxml"));
 
-            // Mostrar la escena del menú
-            Scene scene = new Scene(rootMenu);
-            primaryStage.setTitle("Menú Principal - Veterinaria");
-            primaryStage.setScene(scene);
-            primaryStage.show();
+        Parent root = loader.load();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // Pasar la veterinaria al controlador del menú
+        MenuViewController menuController = loader.getController();
+        menuController.setVeterinaria(veterinaria);
+
+        // Configurar la ventana principal
+        primaryStage.setTitle("Sistema Veterinaria - Patitas");
+        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.show();
     }
 
     public static void main(String[] args) {

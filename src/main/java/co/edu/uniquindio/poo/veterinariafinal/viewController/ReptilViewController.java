@@ -1,3 +1,4 @@
+// ReptilViewController.java
 package co.edu.uniquindio.poo.veterinariafinal.viewController;
 
 import co.edu.uniquindio.poo.veterinariafinal.controller.ReptilController;
@@ -30,39 +31,13 @@ public class ReptilViewController implements Initializable {
     private Veterinaria veterinaria;
     private ReptilController controller;
 
-    /** Método para inyectar la veterinaria compartida desde App o el controlador principal */
-    public void setVeterinaria(Veterinaria veterinaria) {
-        this.veterinaria = veterinaria;
-        this.controller = new ReptilController(veterinaria);
-
-        // Vincular ComboBox de dueños
-        comboDueno.setItems(veterinaria.getListDuenos());
-
-        // Vincular tabla a lista de reptiles
-        tablaReptiles.setItems(controller.getListaReptiles());
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        controller = new ReptilController(null); // Se actualizará con setVeterinaria
+
         // Llenar ComboBoxes con enumeraciones
         comboHabitat.getItems().addAll(TipoHabitat.values());
         comboPeligro.getItems().addAll(NivelPeligro.values());
-
-        // Configurar visualización de dueños en ComboBox
-        comboDueno.setCellFactory(lv -> new ListCell<>() {
-            @Override
-            protected void updateItem(Dueno item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty || item == null ? "" : item.getNombre());
-            }
-        });
-        comboDueno.setButtonCell(new ListCell<>() {
-            @Override
-            protected void updateItem(Dueno item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty || item == null ? "" : item.getNombre());
-            }
-        });
 
         // Inicializar columnas de tabla
         colId.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getId()));
@@ -78,13 +53,42 @@ public class ReptilViewController implements Initializable {
         ));
     }
 
+    public void setVeterinaria(Veterinaria veterinaria) {
+        this.veterinaria = veterinaria;
+        this.controller = new ReptilController(veterinaria);
+
+        // Vincular ComboBox de dueños
+        comboDueno.setItems(veterinaria.getListDuenos());
+
+        // Configurar visualización de dueños en ComboBox
+        comboDueno.setCellFactory(lv -> new ListCell<Dueno>() {
+            @Override
+            protected void updateItem(Dueno item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? "" : item.getNombre() + " - " + item.getId());
+            }
+        });
+        comboDueno.setButtonCell(new ListCell<Dueno>() {
+            @Override
+            protected void updateItem(Dueno item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty || item == null ? "" : item.getNombre() + " - " + item.getId());
+            }
+        });
+
+        // Vincular tabla a lista de reptiles
+        tablaReptiles.setItems(controller.getListaReptiles());
+    }
+
     // =========================
     // MÉTODOS DE ACCIÓN
     // =========================
 
     @FXML
-    private void agregarReptil(javafx.event.ActionEvent event) {
+    private void agregarReptil() {
         try {
+            if (!validarCampos()) return;
+
             Dueno duenoSeleccionado = comboDueno.getValue();
             if (duenoSeleccionado == null) {
                 mostrarAlerta("Debe seleccionar un dueño.");
@@ -105,17 +109,21 @@ public class ReptilViewController implements Initializable {
 
             controller.agregarReptil(reptil);
             tablaReptiles.refresh();
-            limpiarCampos(event);
+            limpiarCampos();
+            mostrarAlerta("Reptil agregado correctamente.", Alert.AlertType.INFORMATION);
+
         } catch (NumberFormatException e) {
             mostrarAlerta("Edad y Peso deben ser números válidos.");
         }
     }
 
     @FXML
-    private void actualizarReptil(javafx.event.ActionEvent event) {
+    private void actualizarReptil() {
         Reptil seleccionado = tablaReptiles.getSelectionModel().getSelectedItem();
         if (seleccionado != null) {
             try {
+                if (!validarCampos()) return;
+
                 Dueno duenoSeleccionado = comboDueno.getValue();
                 if (duenoSeleccionado == null) {
                     mostrarAlerta("Debe seleccionar un dueño.");
@@ -136,7 +144,9 @@ public class ReptilViewController implements Initializable {
 
                 controller.actualizarReptil(seleccionado, actualizado);
                 tablaReptiles.refresh();
-                limpiarCampos(event);
+                limpiarCampos();
+                mostrarAlerta("Reptil actualizado correctamente.", Alert.AlertType.INFORMATION);
+
             } catch (NumberFormatException e) {
                 mostrarAlerta("Edad y Peso deben ser números válidos.");
             }
@@ -146,18 +156,44 @@ public class ReptilViewController implements Initializable {
     }
 
     @FXML
-    private void eliminarReptil(javafx.event.ActionEvent event) {
+    private void eliminarReptil() {
         Reptil seleccionado = tablaReptiles.getSelectionModel().getSelectedItem();
         if (seleccionado != null) {
             controller.eliminarReptil(seleccionado);
             tablaReptiles.refresh();
+            mostrarAlerta("Reptil eliminado correctamente.", Alert.AlertType.INFORMATION);
         } else {
             mostrarAlerta("Seleccione un reptil para eliminar.");
         }
     }
 
     @FXML
-    private void limpiarCampos(javafx.event.ActionEvent event) {
+    private void seleccionarReptil() {
+        Reptil seleccionado = tablaReptiles.getSelectionModel().getSelectedItem();
+        if (seleccionado != null) {
+            txtId.setText(seleccionado.getId());
+            txtNombre.setText(seleccionado.getNombre());
+            txtRaza.setText(seleccionado.getRaza());
+            txtEdad.setText(String.valueOf(seleccionado.getEdad()));
+            txtPeso.setText(String.valueOf(seleccionado.getPesoKg()));
+            txtTemperatura.setText(seleccionado.getTemperaturaOptima());
+            comboHabitat.setValue(seleccionado.getTipoHabitat());
+            comboPeligro.setValue(seleccionado.getNivelPeligro());
+
+            // Buscar y seleccionar el dueño en el ComboBox
+            if (seleccionado.getDueno() != null && veterinaria != null) {
+                for (Dueno dueno : veterinaria.getListDuenos()) {
+                    if (dueno.getId().equals(seleccionado.getDueno().getId())) {
+                        comboDueno.setValue(dueno);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    @FXML
+    private void limpiarCampos() {
         txtId.clear();
         txtNombre.clear();
         txtRaza.clear();
@@ -169,8 +205,28 @@ public class ReptilViewController implements Initializable {
         comboDueno.getSelectionModel().clearSelection();
     }
 
+    private boolean validarCampos() {
+        if (txtId.getText().isEmpty() || txtNombre.getText().isEmpty() || txtRaza.getText().isEmpty() ||
+                txtEdad.getText().isEmpty() || txtPeso.getText().isEmpty() || txtTemperatura.getText().isEmpty()) {
+            mostrarAlerta("Todos los campos son obligatorios.");
+            return false;
+        }
+        if (comboHabitat.getValue() == null || comboPeligro.getValue() == null) {
+            mostrarAlerta("Debe seleccionar hábitat y nivel de peligro.");
+            return false;
+        }
+        return true;
+    }
+
     private void mostrarAlerta(String mensaje) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
+    private void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();

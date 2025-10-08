@@ -28,20 +28,12 @@ public class DuenoViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Crear veterinaria y controller
-        veterinaria = new Veterinaria("Patitas", "1203");
-        controller = new DuenoController(veterinaria);
-
         // Inicializar columnas de tabla
         colId.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getId()));
         colNombre.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getNombre()));
         colTelefono.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getNumero()));
         colDireccion.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getDireccion()));
         colPuntaje.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getPuntajeFidelidad()));
-
-        // Usar la lista observable directamente de la veterinaria
-        listaDuenos = controller.obtenerDuenos(); // devuelve ObservableList
-        tablaDuenos.setItems(listaDuenos);
     }
 
     public void setVeterinaria(Veterinaria veterinaria) {
@@ -49,43 +41,65 @@ public class DuenoViewController implements Initializable {
         this.controller = new DuenoController(veterinaria);
 
         // Inicializar tabla con los dueños existentes
-        tablaDuenos.setItems(controller.obtenerDuenos());
+        listaDuenos = controller.obtenerDuenos();
+        tablaDuenos.setItems(listaDuenos);
     }
-
 
     @FXML
     private void agregarDueno() {
-        if (controller.agregarDueno(txtNombre.getText(), txtTelefono.getText(), txtDireccion.getText(), txtPuntaje.getText(), txtId.getText())) {
-            tablaDuenos.refresh();
-            limpiarCampos();
-            mostrarAlerta("Éxito", "Dueño agregado correctamente.");
-        } else {
-            mostrarAlerta("Error", "Ya existe un dueño con ese ID.");
+        if (validarCampos()) {
+            if (controller.agregarDueno(txtId.getText(), txtNombre.getText(), txtTelefono.getText(), txtDireccion.getText(), txtPuntaje.getText())) {
+                tablaDuenos.refresh();
+                limpiarCampos();
+                mostrarAlerta("Éxito", "Dueño agregado correctamente.", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarAlerta("Error", "Ya existe un dueño con ese ID.", Alert.AlertType.ERROR);
+            }
         }
     }
 
     @FXML
     private void eliminarDueno() {
         Dueno dueno = tablaDuenos.getSelectionModel().getSelectedItem();
-        if (dueno != null && controller.eliminarDueno(dueno.getId())) {
-            tablaDuenos.refresh();
-            mostrarAlerta("Éxito", "Dueño eliminado correctamente.");
+        if (dueno != null) {
+            if (controller.eliminarDueno(dueno.getId())) {
+                tablaDuenos.refresh();
+                mostrarAlerta("Éxito", "Dueño eliminado correctamente.", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarAlerta("Error", "No se pudo eliminar el dueño.", Alert.AlertType.ERROR);
+            }
         } else {
-            mostrarAlerta("Error", "No se pudo eliminar el dueño.");
+            mostrarAlerta("Advertencia", "Seleccione un dueño para eliminar.", Alert.AlertType.WARNING);
         }
     }
 
     @FXML
     private void actualizarDueno() {
-        if (controller.actualizarDueno(txtNombre.getText(), txtTelefono.getText(), txtDireccion.getText(), txtPuntaje.getText(), txtId.getText())) {
-            tablaDuenos.refresh();
-            limpiarCampos();
-            mostrarAlerta("Éxito", "Dueño actualizado correctamente.");
-        } else {
-            mostrarAlerta("Error", "No existe un dueño con ese ID.");
+        if (validarCampos()) {
+            if (controller.actualizarDueno(txtId.getText(), txtNombre.getText(), txtTelefono.getText(), txtDireccion.getText(), txtPuntaje.getText())) {
+                tablaDuenos.refresh();
+                limpiarCampos();
+                mostrarAlerta("Éxito", "Dueño actualizado correctamente.", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarAlerta("Error", "No existe un dueño con ese ID.", Alert.AlertType.ERROR);
+            }
         }
     }
 
+    @FXML
+    private void seleccionarDueno() {
+        Dueno duenoSeleccionado = tablaDuenos.getSelectionModel().getSelectedItem();
+        if (duenoSeleccionado != null) {
+            txtId.setText(duenoSeleccionado.getId());
+            txtNombre.setText(duenoSeleccionado.getNombre());
+            txtTelefono.setText(duenoSeleccionado.getNumero());
+            txtDireccion.setText(duenoSeleccionado.getDireccion());
+            txtPuntaje.setText(duenoSeleccionado.getPuntajeFidelidad());
+        }
+    }
+
+    // 🔧 MÉTODO NUEVO AGREGADO
+    @FXML
     private void limpiarCampos() {
         txtId.clear();
         txtNombre.clear();
@@ -94,8 +108,27 @@ public class DuenoViewController implements Initializable {
         txtPuntaje.clear();
     }
 
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    private boolean validarCampos() {
+        if (txtId.getText().isEmpty() || txtNombre.getText().isEmpty()) {
+            // 🔧 CORREGIDO: Agregar el parámetro faltante
+            mostrarAlerta("Error", "Campos obligatorios", "ID y Nombre son campos obligatorios.", Alert.AlertType.ERROR);
+            return false;
+        }
+        return true;
+    }
+
+    // 🔧 MÉTODO CORREGIDO: Agregar el parámetro faltante
+    private void mostrarAlerta(String titulo, String encabezado, String contenido, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(encabezado);
+        alert.setContentText(contenido);
+        alert.showAndWait();
+    }
+
+    // 🔧 MÉTODO SOBRECARGADO PARA MANTENER COMPATIBILIDAD
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);

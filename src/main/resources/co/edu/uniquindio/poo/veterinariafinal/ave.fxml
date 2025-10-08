@@ -1,65 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
+<BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="co.edu.uniquindio.poo.veterinariafinal.viewController.AveViewController"
-            prefWidth="950" prefHeight="500">
+            prefWidth="1000" prefHeight="700">
 
-    <VBox spacing="10" layoutX="20" layoutY="20">
+    <top>
+        <Label text="🦜 Gestión de Aves"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 15; -fx-text-fill: #2c3e50;"
+               BorderPane.alignment="CENTER"/>
+    </top>
 
-        <Label text="Gestión de Aves" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <center>
+        <VBox spacing="15">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
 
-        <HBox spacing="20">
             <!-- Formulario -->
-            <VBox spacing="8">
-                <Label text="Nombre:"/>
-                <TextField fx:id="txtNombre"/>
+            <VBox spacing="15" style="-fx-background-color: #f0fff0; -fx-padding: 20; -fx-border-radius: 10; -fx-background-radius: 10;">
+                <Label text="Información del Ave" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
 
-                <Label text="Raza:"/>
-                <TextField fx:id="txtRaza"/>
+                <GridPane hgap="15" vgap="15">
+                    <columnConstraints>
+                        <ColumnConstraints prefWidth="150" halignment="RIGHT"/>
+                        <ColumnConstraints prefWidth="250" halignment="LEFT"/>
+                        <ColumnConstraints prefWidth="150" halignment="RIGHT"/>
+                        <ColumnConstraints prefWidth="250" halignment="LEFT"/>
+                    </columnConstraints>
 
-                <Label text="Edad:"/>
-                <TextField fx:id="txtEdad"/>
+                    <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtNombre" GridPane.rowIndex="0" GridPane.columnIndex="1" promptText="Nombre del ave"/>
 
-                <Label text="Peso (kg):"/>
-                <TextField fx:id="txtPeso"/>
+                    <Label text="Raza:" GridPane.rowIndex="0" GridPane.columnIndex="2" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtRaza" GridPane.rowIndex="0" GridPane.columnIndex="3" promptText="Raza del ave"/>
 
-                <Label text="ID:"/>
-                <TextField fx:id="txtId"/>
+                    <Label text="Edad:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtEdad" GridPane.rowIndex="1" GridPane.columnIndex="1" promptText="Edad en años"/>
 
-                <Label text="Dueño:"/>
-                <TextField fx:id="txtDuenoNombre"/>
+                    <Label text="Peso (kg):" GridPane.rowIndex="1" GridPane.columnIndex="2" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtPeso" GridPane.rowIndex="1" GridPane.columnIndex="3" promptText="Peso en kg"/>
 
-                <Label text="Tipo de Plumaje:"/>
-                <TextField fx:id="txtTipoPlumaje"/>
+                    <Label text="ID:" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtId" GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="ID único"/>
 
-                <Label text="Sonidos Imitados:"/>
-                <TextField fx:id="txtSonidosImitados"/>
+                    <Label text="Dueño:" GridPane.rowIndex="2" GridPane.columnIndex="2" style="-fx-font-weight: bold;"/>
+                    <ComboBox fx:id="comboDueno" promptText="Seleccione un dueño"
+                              prefWidth="250" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
 
-                <Label text="¿Vuela?:"/>
-                <ComboBox fx:id="comboVuela"/>
+                    <Label text="Tipo de Plumaje:" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtTipoPlumaje" GridPane.rowIndex="3" GridPane.columnIndex="1" promptText="Tipo de plumaje"/>
 
-                <HBox spacing="10" alignment="CENTER">
-                    <Button text="Agregar" onAction="#agregarAve"/>
-                    <Button text="Eliminar" onAction="#eliminarAve"/>
-                </HBox>
+                    <Label text="Sonidos Imitados:" GridPane.rowIndex="3" GridPane.columnIndex="2" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="txtSonidosImitados" GridPane.rowIndex="3" GridPane.columnIndex="3" promptText="Cantidad de sonidos"/>
+
+                    <Label text="¿Vuela?:" GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                    <ComboBox fx:id="comboVuela" GridPane.rowIndex="4" GridPane.columnIndex="1" promptText="Seleccione opción"/>
+                </GridPane>
             </VBox>
 
-            <!-- Tabla -->
-            <TableView fx:id="tablaAves" prefWidth="600" prefHeight="400">
-                <columns>
-                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="90"/>
-                    <TableColumn fx:id="colRaza" text="Raza" prefWidth="90"/>
-                    <TableColumn fx:id="colEdad" text="Edad" prefWidth="60"/>
-                    <TableColumn fx:id="colPeso" text="Peso" prefWidth="70"/>
-                    <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
-                    <TableColumn fx:id="colTipoPlumaje" text="Plumaje" prefWidth="100"/>
-                    <TableColumn fx:id="colSonidosImitados" text="Sonidos" prefWidth="90"/>
-                    <TableColumn fx:id="colVuela" text="Vuela" prefWidth="70"/>
-                </columns>
-            </TableView>
-        </HBox>
-    </VBox>
-</AnchorPane>
+            <!-- Botones de acción -->
+            <HBox spacing="15" alignment="CENTER">
+                <Button text="💾 Agregar" onAction="#agregarAve"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 120;"/>
+                <Button text="✏️ Actualizar" onAction="#actualizarAve"
+                        style="-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 120;"/>
+                <Button text="🗑️ Eliminar" onAction="#eliminarAve"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 120;"/>
+                <Button text="🔍 Seleccionar" onAction="#seleccionarAve"
+                        style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 120;"/>
+                <Button text="🧹 Limpiar" onAction="#limpiarCampos"
+                        style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 120;"/>
+            </HBox>
+
+            <!-- Tabla de aves -->
+            <VBox spacing="10">
+                <Label text="Lista de Aves Registradas" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                <TableView fx:id="tablaAves" prefHeight="250" prefWidth="950">
+                    <columns>
+                        <TableColumn fx:id="colNombre" text="Nombre" prefWidth="100"/>
+                        <TableColumn fx:id="colRaza" text="Raza" prefWidth="100"/>
+                        <TableColumn fx:id="colEdad" text="Edad" prefWidth="70"/>
+                        <TableColumn fx:id="colPeso" text="Peso (kg)" prefWidth="90"/>
+                        <TableColumn fx:id="colId" text="ID" prefWidth="100"/>
+                        <TableColumn fx:id="colDueno" text="Dueño" prefWidth="120"/>
+                        <TableColumn fx:id="colTipoPlumaje" text="Plumaje" prefWidth="100"/>
+                        <TableColumn fx:id="colSonidosImitados" text="Sonidos" prefWidth="90"/>
+                        <TableColumn fx:id="colVuela" text="Vuela" prefWidth="80"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

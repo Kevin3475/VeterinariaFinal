@@ -20,26 +20,52 @@ public class ReptilController {
     }
 
     public ObservableList<Dueno> getListaDuenos() {
-        return veterinaria.getListDuenos(); // <--- usar directamente la lista de la veterinaria
+        return veterinaria != null ? veterinaria.getListDuenos() : FXCollections.observableArrayList();
     }
 
     public void agregarReptil(Reptil reptil) {
+        // Validaciones
+        if (reptil.getNombre() == null || reptil.getNombre().trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede estar vacío");
+        }
+        if (reptil.getEdad() <= 0) {
+            throw new IllegalArgumentException("La edad debe ser positiva");
+        }
+        if (reptil.getPesoKg() <= 0) {
+            throw new IllegalArgumentException("El peso debe ser positivo");
+        }
+        if (reptil.getDueno() == null) {
+            throw new IllegalArgumentException("El dueño no puede ser nulo");
+        }
+
         listaReptiles.add(reptil);
-        reptil.getDueno().getListMascotas().add(reptil);
+        if (veterinaria != null) {
+            reptil.getDueno().getListMascotas().add(reptil);
+        }
     }
 
     public void actualizarReptil(Reptil original, Reptil actualizado) {
         int index = listaReptiles.indexOf(original);
         if (index >= 0) {
             listaReptiles.set(index, actualizado);
-            original.getDueno().getListMascotas().remove(original);
-            actualizado.getDueno().getListMascotas().add(actualizado);
+            if (veterinaria != null) {
+                original.getDueno().getListMascotas().remove(original);
+                actualizado.getDueno().getListMascotas().add(actualizado);
+            }
         }
     }
 
     public void eliminarReptil(Reptil reptil) {
         listaReptiles.remove(reptil);
-        reptil.getDueno().getListMascotas().remove(reptil);
+        if (veterinaria != null) {
+            reptil.getDueno().getListMascotas().remove(reptil);
+        }
+    }
+
+    public Reptil buscarReptilPorId(String id) {
+        return listaReptiles.stream()
+                .filter(reptil -> reptil.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 }
-

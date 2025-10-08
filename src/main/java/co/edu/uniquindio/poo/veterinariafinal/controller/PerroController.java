@@ -21,7 +21,20 @@ public class PerroController {
             return "⚠️ Todos los campos son obligatorios.";
         }
 
-        Dueno dueno = new Dueno(nombreDueno, "N/A", "N/A", "N/A", "0");
+        if (edad <= 0) {
+            return "⚠️ La edad debe ser positiva.";
+        }
+
+        if (peso <= 0) {
+            return "⚠️ El peso debe ser positivo.";
+        }
+
+        // Verificar si ya existe un perro con ese ID
+        if (buscarPerroPorId(id) != null) {
+            return "⚠️ Ya existe un perro con ese ID.";
+        }
+
+        Dueno dueno = new Dueno("temp", nombreDueno, "N/A", "N/A", "0");
         Perro nuevoPerro = new Perro(nombre, raza, edad, peso, id, dueno, nivelAdiestramiento, necesidadPaseo, tamano);
         listaPerros.add(nuevoPerro);
 
@@ -44,5 +57,12 @@ public class PerroController {
         perro.setTamanoPerro(tamano);
         perro.setNivelAdiestramiento(nivelAdiestramiento);
         perro.setNecesidadPaseo(necesidadPaseo);
+    }
+
+    public Perro buscarPerroPorId(String id) {
+        return listaPerros.stream()
+                .filter(perro -> perro.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 }
